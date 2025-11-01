@@ -6,31 +6,26 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")  // Allow all origins for testing
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final UserService userService;
 
     public AuthController(UserService userService) {
         this.userService = userService;
-        System.out.println("AuthController initialized");
     }
 
     @PostMapping("/signup")
     public String signup(@RequestBody User newUser) {
         System.out.println("=== SIGNUP ENDPOINT HIT ===");
-        System.out.println("Received user: " + newUser.getUsername());
-        String result = userService.signup(newUser);
-        System.out.println("Returning: " + result);
-        return result;
+        System.out.println("Received user: " + newUser.getEmail());
+        return userService.signup(newUser);
     }
 
     @PostMapping("/login")
     public String login(@RequestBody User loginUser) {
         System.out.println("=== LOGIN ENDPOINT HIT ===");
-        System.out.println("Received user: " + loginUser.getUsername());
-        String result = userService.login(loginUser);
-        System.out.println("Returning: " + result);
-        return result;
+        System.out.println("Login attempt from: " + loginUser.getEmail());
+        return userService.login(loginUser);
     }
 }

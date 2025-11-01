@@ -4,43 +4,39 @@ import com.login.demo.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService {
+
     private final File file;
     private final ObjectMapper mapper = new ObjectMapper();
 
+    // DSA upgrade: use a HashMap for O(1) lookups
+    private final Map<String, User> userMap = new HashMap<>();
+
     public UserService() {
         String userHome = System.getProperty("user.home");
-        File dataDir = new File(userHome, "login-app-data");
-        if (!dataDir.exists()) {
-            boolean created = dataDir.mkdirs();
-            System.out.println("Data directory created: " + created);
-        }
+        File dataDir = new File(userHome, "shu-pool-data");
+        if (!dataDir.exists()) dataDir.mkdirs();
+
         this.file = new File(dataDir, "users.json");
-        System.out.println("========================================");
-        System.out.println("User data file location: " + file.getAbsolutePath());
-        System.out.println("File exists: " + file.exists());
-        System.out.println("========================================");
+        System.out.println("USERS.JSON PATH → " + file.getAbsolutePath());
+        loadToMemory(); // populate map on startup
     }
+
+    // ---------- UTILITIES ----------
 
     private List<User> readUsers() {
         try {
             if (!file.exists()) {
-                System.out.println("File doesn't exist, creating new one...");
-                file.getParentFile().mkdirs();
                 mapper.writeValue(file, new ArrayList<User>());
-                System.out.println("Empty users file created");
             }
-            List<User> users = mapper.readValue(file, new TypeReference<List<User>>() {});
-            System.out.println("Read " + users.size() + " users from file");
-            return users;
+            return mapper.readValue(file, new TypeReference<List<User>>() {});
         } catch (IOException e) {
-            System.err.println("ERROR reading users: " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
         }
@@ -49,56 +45,67 @@ public class UserService {
     private void saveUsers(List<User> users) {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, users);
-            System.out.println("✓ Successfully saved " + users.size() + " users to file");
-            System.out.println("File path: " + file.getAbsolutePath());
-            System.out.println("File size: " + file.length() + " bytes");
         } catch (IOException e) {
-            System.err.println("✗ ERROR saving users: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    // load list → HashMap for O(1) search
+    private void loadToMemory() {
+        for (User u : readUsers()) {
+            userMap.put(u.getEmail().toLowerCase(), u);
+        }
+    }
+
+    // ---------- SIGN UP ----------
+
     public String signup(User newUser) {
-        System.out.println("\n=== SIGNUP REQUEST ===");
-        System.out.println("Username: " + newUser.getUsername());
-        System.out.println("Password: " + (newUser.getPassword() != null ? "***" : "NULL"));
+        if (newUser.getFullName() == null || newUser.getFullName().trim().isEmpty())
+            return "Full name required.";
 
-        if (newUser.getUsername() == null || newUser.getUsername().trim().isEmpty()) {
-            return "Username cannot be empty!";
-        }
-        if (newUser.getPassword() == null || newUser.getPassword().trim().isEmpty()) {
-            return "Password cannot be empty!";
-        }
+        if (newUser.getStudentId() == null || newUser.getStudentId().trim().isEmpty())
+            return "Student/Staff ID required.";
 
-        List<User> users = readUsers();
-        for (User u : users) {
-            if (u.getUsername().equalsIgnoreCase(newUser.getUsername())) {
-                System.out.println("✗ Username already exists");
-                return "Username already exists!";
-            }
-        }
-        users.add(newUser);
+        if (newUser.getEmail() == null || !newUser.getEmail().endsWith("@shu.edu.pk"))
+            return "Please use official SHU email.";
+
+        if (newUser.getPassword() == null || newUser.getPassword().length() < 5)
+            return "Password must be at least 5 characters.";
+
+        // check existing using HashMap
+        if (userMap.containsKey(newUser.getEmail().toLowerCase()))
+            return "Email already registered.";
+
+        // add to map + file
+        userMap.put(newUser.getEmail().toLowerCase(), newUser);
+
+        List<User> users = new ArrayList<>(userMap.values());
         saveUsers(users);
-        System.out.println("✓ Signup successful!");
         return "Signup successful!";
     }
 
+    // ---------- LOGIN ----------
+
     public String login(User loginUser) {
-        System.out.println("\n=== LOGIN REQUEST ===");
-        System.out.println("Username: " + loginUser.getUsername());
-        System.out.println("Password: " + (loginUser.getPassword() != null ? "***" : "NULL"));
+        if (loginUser.getEmail() == null || loginUser.getPassword() == null)
+            return "Missing email or password.";
 
-        List<User> users = readUsers();
-        System.out.println("Checking against " + users.size() + " registered users");
+        User existing = userMap.get(loginUser.getEmail().toLowerCase());
+        if (existing == null)
+            return "User not found.";
 
-        for (User u : users) {
-            if (u.getUsername().equalsIgnoreCase(loginUser.getUsername()) &&
-                    u.getPassword().equals(loginUser.getPassword())) {
-                System.out.println("✓ Login successful!");
-                return "Login successful!";
-            }
-        }
-        System.out.println("✗ Invalid credentials");
-        return "Invalid username or password!";
+        if (!existing.getPassword().equals(loginUser.getPassword()))
+            return "Invalid password.";
+
+        return "Login successful!";
+    }
+
+    // ---------- EXTRA UTILITIES ----------
+
+    public List<User> getAllUsersSorted() {
+        // demonstrate DSA: sort by name using TreeSet
+        TreeSet<User> sorted = new TreeSet<>(Comparator.comparing(User::getFullName));
+        sorted.addAll(userMap.values());
+        return new ArrayList<>(sorted);
     }
 }
