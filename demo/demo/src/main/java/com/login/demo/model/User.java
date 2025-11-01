@@ -1,10 +1,10 @@
 package com.login.demo.model;
 
 public class User {
-    private String studentId;   // student or staff ID
-    private String fullName;    // user's full name
-    private String email;       // must be official SHU email
-    private String password;    // user password
+    private String studentId;   // Student or staff ID
+    private String fullName;    // User's full name
+    private String email;       // Must be official SHU email
+    private String password;    // User password
     private String role;        // "driver" or "passenger" (can be empty for now)
 
     // Default constructor (required by Jackson)

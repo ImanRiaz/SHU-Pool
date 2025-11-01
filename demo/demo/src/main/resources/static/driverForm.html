@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Registration</title>
+    <link rel="stylesheet" href="css/driverForm.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Driver Registration</h2>
+    <form id="driverForm">
+        <input type="text" id="cnic" placeholder="CNIC (e.g., 42101-1234567-8)" required>
+        <input type="text" id="drivingLicense" placeholder="Driving License Number" required>
+        <input type="number" id="seatsAvailable" placeholder="Seats Available" min="1" required>
+        <input type="text" id="carPlateNumber" placeholder="Car Plate Number (e.g., ABC-123)" required>
+        <input type="text" id="location" placeholder="Your Area (e.g., Gulshan-e-Iqbal)" required>
+
+        <!-- Gender Preference Dropdown -->
+        <label for="genderPreference">Preferred Passenger Gender:</label>
+        <select id="genderPreference" required>
+            <option value="" disabled selected>Select gender preference</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="both">Both</option>
+        </select>
+
+        <!-- Student or Staff Dropdown -->
+        <label for="studentOrStaff">You are a:</label>
+        <select id="studentOrStaff" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="student">Student</option>
+            <option value="staff">Staff</option>
+        </select>
+
+        <input type="tel" id="contactNumber" placeholder="Contact Number (e.g., 0300-1234567)" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="responseMsg" style="margin-top: 15px;"></div>
+</div>
+
+<script src="js/driverForm.js"></script>
+</body>
+</html>

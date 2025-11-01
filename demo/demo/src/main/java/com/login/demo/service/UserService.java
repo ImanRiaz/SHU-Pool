@@ -15,7 +15,7 @@ public class UserService {
     private final File file;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // DSA upgrade: use a HashMap for O(1) lookups
+    // DSA: use HashMap for O(1) lookups
     private final Map<String, User> userMap = new HashMap<>();
 
     public UserService() {
@@ -24,7 +24,7 @@ public class UserService {
         if (!dataDir.exists()) dataDir.mkdirs();
 
         this.file = new File(dataDir, "users.json");
-        System.out.println("USERS.JSON PATH → " + file.getAbsolutePath());
+        System.out.println(" USERS.JSON PATH → " + file.getAbsolutePath());
         loadToMemory(); // populate map on startup
     }
 
@@ -45,6 +45,7 @@ public class UserService {
     private void saveUsers(List<User> users) {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, users);
+            System.out.println("Saved " + users.size() + " users to JSON");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,6 +56,7 @@ public class UserService {
         for (User u : readUsers()) {
             userMap.put(u.getEmail().toLowerCase(), u);
         }
+        System.out.println("📦 Loaded " + userMap.size() + " users into memory");
     }
 
     // ---------- SIGN UP ----------
@@ -100,10 +102,30 @@ public class UserService {
         return "Login successful!";
     }
 
+    // ---------- UPDATE ROLE ----------
+
+    public String updateRole(String email, String role) {
+        if (email == null || role == null)
+            return "Missing email or role.";
+
+        User user = userMap.get(email.toLowerCase());
+        if (user == null)
+            return "User not found.";
+
+        user.setRole(role);
+        userMap.put(email.toLowerCase(), user);
+
+        // Save to file
+        saveUsers(new ArrayList<>(userMap.values()));
+        System.out.println("Role updated: " + email + " → " + role);
+
+        return "Role updated successfully to " + role + "!";
+    }
+
     // ---------- EXTRA UTILITIES ----------
 
     public List<User> getAllUsersSorted() {
-        // demonstrate DSA: sort by name using TreeSet
+        // Demonstrate DSA: sort by name using TreeSet
         TreeSet<User> sorted = new TreeSet<>(Comparator.comparing(User::getFullName));
         sorted.addAll(userMap.values());
         return new ArrayList<>(sorted);
