@@ -1,21 +1,24 @@
 document.getElementById("driverForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  // Collect form data
   const driverData = {
-    cnic: document.getElementById("cnic").value,
-    drivingLicense: document.getElementById("drivingLicense").value,
+    cnic: document.getElementById("cnic").value.trim(),
+    drivingLicense: document.getElementById("drivingLicense").value.trim(),
     seatsAvailable: document.getElementById("seatsAvailable").value,
-    carPlateNumber: document.getElementById("carPlateNumber").value,
-    location: document.getElementById("location").value,
+    carPlateNumber: document.getElementById("carPlateNumber").value.trim(),
+    location: document.getElementById("location").value.trim(),
     genderPreference: document.getElementById("genderPreference").value,
     studentOrStaff: document.getElementById("studentOrStaff").value,
-    contactNumber: document.getElementById("contactNumber").value,
-    email: localStorage.getItem("userEmail") // from logged-in user
+    contactNumber: document.getElementById("contactNumber").value.trim(),
+    email: localStorage.getItem("userEmail") // saved after login
   };
 
   const resDiv = document.getElementById("responseMsg");
   resDiv.textContent = "Submitting...";
   resDiv.style.color = "orange";
+
+  console.log("🚗 Submitting driver data:", driverData);
 
   try {
     const response = await fetch("/api/driver/register", {
@@ -25,17 +28,23 @@ document.getElementById("driverForm").addEventListener("submit", async (e) => {
     });
 
     const result = await response.text();
+    console.log("✅ Server response:", result);
 
-    if (result.includes("success")) {
+    // Check for success or already exists
+    if (result.toLowerCase().includes("successful") || result.toLowerCase().includes("exists")) {
       resDiv.textContent = result;
       resDiv.style.color = "green";
-      alert("Driver profile created successfully!");
-      window.location.href = "/dashboard.html"; // redirect later
+      alert(result);
+
+      // Redirect to home page after success
+      window.location.href = "/home.html";
     } else {
       resDiv.textContent = result;
       resDiv.style.color = "red";
     }
+
   } catch (error) {
+    console.error("❌ Error submitting driver data:", error);
     resDiv.textContent = "Error: " + error.message;
     resDiv.style.color = "red";
   }

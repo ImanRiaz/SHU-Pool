@@ -22,7 +22,7 @@ public class PassengerService {
         if (!dataDir.exists()) dataDir.mkdirs();
 
         this.file = new File(dataDir, "passengers.json");
-        System.out.println("💾 PASSENGERS.JSON PATH → " + file.getAbsolutePath());
+        System.out.println(" PASSENGERS.JSON PATH → " + file.getAbsolutePath());
         loadToMemory();
     }
 
@@ -31,7 +31,7 @@ public class PassengerService {
         for (Passenger p : readPassengers()) {
             passengerMap.put(p.getEmail().toLowerCase(), p);
         }
-        System.out.println("📦 Loaded " + passengerMap.size() + " passengers into memory");
+        System.out.println(" Loaded " + passengerMap.size() + " passengers into memory");
     }
 
     // Read from JSON
@@ -51,7 +51,7 @@ public class PassengerService {
     private void savePassengers(List<Passenger> passengers) {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, passengers);
-            System.out.println("✅ Saved " + passengers.size() + " passengers to JSON");
+            System.out.println(" Saved " + passengers.size() + " passengers to JSON");
         } catch (IOException e) {
             e.printStackTrace();
         }
