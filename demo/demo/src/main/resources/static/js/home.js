@@ -236,3 +236,76 @@ document.head.appendChild(rainbowStyle);
 
 console.log('%c🚗 Welcome to SHU Pool! 🚗', 'font-size: 20px; color: #0072CE; font-weight: bold;');
 console.log('%cRide Together. Save Together.', 'font-size: 14px; color: #666;');
+// Dynamic Welcome Message
+window.addEventListener("load", async () => {
+  const email = localStorage.getItem("userEmail");
+  const welcomeEl = document.getElementById("welcomeMessage");
+
+  if (!email || !welcomeEl) return;
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/user/info?email=${encodeURIComponent(email)}`);
+    if (!response.ok) throw new Error("Failed to fetch user info");
+
+    const user = await response.json();
+    const name = user.fullName || "User";
+
+    // Typing effect
+    let i = 0;
+    const text = `Welcome back, ${name}!`;
+    welcomeEl.style.width = "auto";
+    welcomeEl.textContent = ""; // clear before typing
+
+    const type = () => {
+      if (i < text.length) {
+        welcomeEl.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 100); // typing speed (lower = faster)
+      }
+    };
+
+    type();
+  } catch (err) {
+    console.error("Error loading user:", err);
+  }
+});
+
+// ==========================
+// 🚗 SHU Pool Navigation Logic
+// ==========================
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log(" Navigation logic initialized.");
+
+  // Find buttons on home page
+  const postRideBtn = document.querySelector(".btn-accent"); // Post a Ride
+  const findPartnerBtn = document.querySelector(".btn-white"); // Find a Partner
+
+  // Navbar links
+  const navLinks = {
+    home: document.querySelector('a[href="#home"]'),
+    profile: document.querySelector('a[href="#profile"]'),
+    post: document.querySelector('a[href="#post"]'),
+    partner: document.querySelector('a[href="#partner"]'),
+    schedule: document.querySelector('a[href="#schedule"]'),
+    route: document.querySelector('a[href="#route"]'),
+    about: document.querySelector('a[href="#about"]')
+  };
+
+  // Helper to redirect to a page
+  const goTo = (page) => {
+    window.location.href = `${page}.html`;
+  };
+
+  // Main hero buttons
+  if (postRideBtn) postRideBtn.addEventListener("click", () => goTo("post-ride"));
+  if (findPartnerBtn) findPartnerBtn.addEventListener("click", () => goTo("find-partner"));
+
+  // Navbar redirects
+  if (navLinks.profile) navLinks.profile.addEventListener("click", () => goTo("profile"));
+  if (navLinks.post) navLinks.post.addEventListener("click", () => goTo("post-ride"));
+  if (navLinks.partner) navLinks.partner.addEventListener("click", () => goTo("find-partner"));
+  if (navLinks.schedule) navLinks.schedule.addEventListener("click", () => goTo("schedule"));
+  if (navLinks.route) navLinks.route.addEventListener("click", () => goTo("routes"));
+  if (navLinks.about) navLinks.about.addEventListener("click", () => goTo("about"));
+});

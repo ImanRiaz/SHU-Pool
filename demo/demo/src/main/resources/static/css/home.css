@@ -665,3 +665,29 @@ body.dark-theme .hero {
         font-size: 1.75rem;
     }
 }
+
+/* Welcome Section */
+.welcome-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.welcome-text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid var(--primary-blue);
+  width: 0;
+  animation: typing 2s steps(30, end) forwards, blink 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Find My Partner — SHU Pool</title>
+    <link rel="stylesheet" href="css/find-partner.css">
+</head>
+<body>
+<header class="nav">
+    <a class="brand" href="home.html">🚗 SHU Pool</a>
+    <nav class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="find-partner.html" class="active">Find Partner</a>
+        <a href="post-ride.html">Post Ride</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+</header>
+
+<main class="page">
+    <section class="hero">
+        <h1>Find Your Partner</h1>
+        <p class="lead">Choose whether you're offering a ride or looking for one — people nearby will be highlighted.</p>
+
+        <div class="choice-row">
+            <button id="chooseDriver" class="choice-card">
+                <div class="emoji">🚘</div>
+                <h3>Find a Passenger</h3>
+                <p>You're a driver offering seats — let passengers see your post.</p>
+            </button>
+
+            <button id="choosePassenger" class="choice-card">
+                <div class="emoji">🧍</div>
+                <h3>Find a Driver</h3>
+                <p>You're a passenger looking for a ride — post your request.</p>
+            </button>
+        </div>
+    </section>
+
+    <section class="post-area">
+        <div class="post-column">
+            <div class="form-card" id="formCard">
+                <h2 id="formTitle">Create a Post</h2>
+
+                <form id="postForm">
+                    <input id="posterName" type="text" placeholder="Your name (auto from login)" />
+                    <input id="posterEmail" type="email" placeholder="Your email (auto from login)" />
+
+                    <div class="inline-row">
+                        <input id="pickup" type="text" placeholder="Pickup location (area)" required />
+                        <input id="destination" type="text" placeholder="Destination (default SHU)" value="SHU Campus" required />
+                    </div>
+
+                    <div class="inline-row">
+                        <input id="time" type="time" />
+                        <input id="date" type="date" />
+                    </div>
+
+                    <div class="inline-row">
+                        <select id="postRole" required>
+                            <option value="driver">I am offering seats (Driver)</option>
+                            <option value="passenger">I need a ride (Passenger)</option>
+                        </select>
+
+                        <select id="genderPref">
+                            <option value="any">Gender preference: Any</option>
+                            <option value="male">Male only</option>
+                            <option value="female">Female only</option>
+                        </select>
+                    </div>
+
+                    <div class="inline-row">
+                        <input id="seats" type="number" min="1" placeholder="Seats (drivers only)" />
+                        <input id="contact" type="tel" placeholder="Contact number (optional)" />
+                    </div>
+
+                    <textarea id="note" rows="3" placeholder="Notes (e.g. pickup landmarks, flexible time)"></textarea>
+
+                    <div class="form-actions">
+                        <button id="submitPost" type="submit" class="btn-primary">Post to Feed</button>
+                        <button id="clearForm" type="button" class="btn-ghost">Clear</button>
+                    </div>
+
+                    <div id="formMsg" class="form-msg"></div>
+                </form>
+
+            </div>
+
+            <div class="filters-card">
+                <h3>Filters</h3>
+                <div class="filter-row">
+                    <select id="filterRole">
+                        <option value="all">All Roles</option>
+                        <option value="driver">Drivers</option>
+                        <option value="passenger">Passengers</option>
+                    </select>
+
+                    <input id="filterLocation" type="text" placeholder="Filter by location (e.g., Gulshan)" />
+                </div>
+
+                <div class="filter-row">
+                    <select id="filterGender">
+                        <option value="any">Any gender</option>
+                        <option value="male">Male only</option>
+                        <option value="female">Female only</option>
+                    </select>
+
+                    <button id="applyFilters" class="btn">Apply</button>
+                    <button id="resetFilters" class="btn-ghost">Reset</button>
+                </div>
+
+                <div class="hint">Tip: Set your profile location in Profile page so we highlight posts near you.</div>
+            </div>
+        </div>
+
+        <div class="feed-column">
+            <div class="feed-header">
+                <h2>Feed</h2>
+                <div class="feed-actions">
+                    <button id="refreshFeed" class="btn">Refresh</button>
+                    <button id="newSample" class="btn-ghost">Add Sample Post</button>
+                </div>
+            </div>
+
+            <div id="feedContainer" class="feed"></div>
+        </div>
+    </section>
+</main>
+
+<!-- toast -->
+<div id="toast" class="toast" aria-live="polite"></div>
+
+<script src="js/find-partner.js"></script>
+</body>
+</html>
