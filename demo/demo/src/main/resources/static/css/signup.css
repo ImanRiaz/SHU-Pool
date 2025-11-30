@@ -1,45 +1,117 @@
+/* ======= GLOBAL BACKGROUND ======= */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+
+    background: linear-gradient(#0044cc, #00baff);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 100vh;
+    margin: 0;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
 }
 
+/* ======= SIGNUP CONTAINER (WITH BACKGROUND IMAGE) ======= */
 .container {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 320px;
+    width: 360px;
+    padding: 35px;
     text-align: center;
+
+    /* Image inside container */
+    background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url('../images/container-bg.jpg') no-repeat center center/cover;
+
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    animation: fadeIn 0.7s ease-in-out;
 }
 
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-button {
-    width: 95%;
-    padding: 10px;
-    background-color: #4CAF50;
+.container h2 {
     color: white;
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* ======= INPUTS ======= */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+
+    background: rgba(255,255,255,0.2);
+    color: white;
+
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    border: 1px solid rgba(255,255,255,0.3);
+
+    transition: 0.3s ease;
+}
+
+input::placeholder {
+    color: #eeeeee;
+}
+
+input:focus {
+    background: rgba(255,255,255,0.35);
+    box-shadow: 0 0 8px rgba(0, 150, 255, 0.7);
+}
+
+/* ======= BUTTON ======= */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+
+    background: #0075ff;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background: #005ccc;
+    transform: translateY(-2px);
+}
+
+/* ======= LINKS ======= */
+p {
+    color: white;
+    margin-top: 15px;
 }
 
 a {
-    color: #4CAF50;
-    text-decoration: none;
+    color: #aee1ff;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* ======= MESSAGE BOX ======= */
+#signupMessage {
+    border-radius: 8px;
+    background: rgba(216, 113, 113, 0.4);
+    color: white;
+}
+
+/* ======= ANIMATION ======= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
 }

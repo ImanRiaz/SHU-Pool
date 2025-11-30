@@ -1,0 +1,87 @@
+/* -------------------- General Styles -------------------- */
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+  font-family: 'Playfair Display', 'Nunito', sans-serif;
+  background-color: #fff;
+  color: #333;
+}
+
+/* -------------------- Main Heading -------------------- */
+.main-heading {
+  text-align: center;
+  font-family: 'Playfair Display', 'Nunito', sans-serif;
+  font-size: 45px;
+  font-weight: 700;
+  margin: 50px 0 50px 0;
+  color: #333;
+}
+
+/* -------------------- Container -------------------- */
+.responsive-container-block.Container {
+  max-width: 1200px;
+  margin: 0 auto 50px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 0 20px;
+}
+
+.bottomContainer { flex-direction: row-reverse; }
+
+/* -------------------- Image -------------------- */
+.mainImg-container { flex: 1 1 45%; display: flex; justify-content: center; }
+.mainImg { width: 100%; max-width: 500px; border-radius: 10px; }
+
+/* -------------------- Text -------------------- */
+.allText { flex: 1 1 45%; }
+
+/* Headings - Serif + Sans-serif */
+.text-blk.headingText, .text-blk.subHeadingText {
+  font-family: 'Playfair Display', 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+/* Body text / paragraphs - Serif + Sans-serif */
+.text-blk.description {
+  font-family: 'Playfair Display', 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Buttons - Serif + Sans-serif */
+.explore {
+  display: block;
+  margin: 50px auto;
+  font-family: 'Playfair Display', 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 10px 50px;
+  color: #fff;
+  background-color: #f49892;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.explore:hover {
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1' fill='%23f49892'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 20px 20px;
+  background-color: #ffebea;
+  color: #f49892;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+  .responsive-container-block.Container, .bottomContainer { flex-direction: column; gap: 20px; }
+  .mainImg-container, .allText { flex: 1 1 100%; text-align: center; }
+  .text-blk.headingText, .text-blk.subHeadingText { font-size: 25px; }
+  .text-blk.description { font-size: 18px; }
+  .main-heading { font-size: 35px; margin: 40px 0; }
+}

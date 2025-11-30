@@ -1,4 +1,34 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Apply saved theme from localStorage
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+        body.classList.add('dark-theme');
+    }
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-theme');
+
+        // Save preference
+        const theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+
+        // Smooth rotation animation
+        themeToggle.style.transition = 'transform 0.3s ease';
+        themeToggle.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+            themeToggle.style.transform = 'rotate(0deg)';
+        }, 300);
+    });
+});
+
+
 // Theme Toggle Functionality
+
+
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
@@ -289,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
     partner: document.querySelector('a[href="#partner"]'),
     schedule: document.querySelector('a[href="#schedule"]'),
     route: document.querySelector('a[href="#route"]'),
-    about: document.querySelector('a[href="#about"]')
+    about: document.querySelector('a[href="about.html"]')
   };
 
   // Helper to redirect to a page
@@ -307,5 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (navLinks.partner) navLinks.partner.addEventListener("click", () => goTo("find-partner"));
   if (navLinks.schedule) navLinks.schedule.addEventListener("click", () => goTo("schedule"));
   if (navLinks.route) navLinks.route.addEventListener("click", () => goTo("routes"));
-  if (navLinks.about) navLinks.about.addEventListener("click", () => goTo("about"));
+ if (navLinks.about) navLinks.about.addEventListener("click", (e) => {
+     e.preventDefault(); // prevent default browser navigation if needed
+     window.location.href = "about.html";
 });

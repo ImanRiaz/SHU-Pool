@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us Page</title>
+    <link rel="stylesheet" href="css/contact.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<nav>
+    <div class="logo-container">
+        <img src="./img/logo(contact-us-page).png" alt="Logo">
+    </div>
+</nav>
+
+<div class="contact-page">
+    <div class="container">
+
+        <!-- Left: Contact Form -->
+        <div class="left">
+            <form id="contactForm">
+                <h1>Contact Us</h1>
+
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="message">Message</label>
+                <textarea id="message" rows="4" placeholder="Your message" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Right: Map -->
+        <div class="right">
+            <h1>Locate Us</h1>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28909.0!2d67.1112943!3d24.7994939!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33b9f0d8a7a37%3A0xc0cf0be71ddbed22!2sSalim%20Habib%20University!5e0!3m2!1sen!2s!4v1610000000000"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+    </div>
+</div>
+
+<!-- Link to external JS -->
+<script src="js/contact.js"></script>
+
+</body>
+</html>
