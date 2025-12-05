@@ -15,7 +15,7 @@ public class UserService {
     private final File file;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // DSA: use HashMap for O(1) lookups
+    // In-memory cache for O(1) lookups
     private final Map<String, User> userMap = new HashMap<>();
 
     public UserService() {
@@ -25,10 +25,11 @@ public class UserService {
 
         this.file = new File(dataDir, "users.json");
         System.out.println(" USERS.JSON PATH → " + file.getAbsolutePath());
-        loadToMemory(); // populate map on startup
+
+        loadToMemory();
     }
 
-    // ---------- UTILITIES ----------
+    // ---------- INTERNAL UTILITIES ----------
 
     private List<User> readUsers() {
         try {
@@ -51,7 +52,6 @@ public class UserService {
         }
     }
 
-    // load list → HashMap for O(1) search
     private void loadToMemory() {
         for (User u : readUsers()) {
             userMap.put(u.getEmail().toLowerCase(), u);
@@ -62,6 +62,7 @@ public class UserService {
     // ---------- SIGN UP ----------
 
     public String signup(User newUser) {
+
         if (newUser.getFullName() == null || newUser.getFullName().trim().isEmpty())
             return "Full name required.";
 
@@ -74,35 +75,37 @@ public class UserService {
         if (newUser.getPassword() == null || newUser.getPassword().length() < 5)
             return "Password must be at least 5 characters.";
 
-        // check existing using HashMap
         if (userMap.containsKey(newUser.getEmail().toLowerCase()))
             return "Email already registered.";
 
-        // add to map + file
+        // Default role (can be updated later)
+        if (newUser.getRole() == null)
+            newUser.setRole("none");
+
+        // Save in cache
         userMap.put(newUser.getEmail().toLowerCase(), newUser);
 
-        List<User> users = new ArrayList<>(userMap.values());
-        saveUsers(users);
+        saveUsers(new ArrayList<>(userMap.values()));
         return "Signup successful!";
     }
 
-    // ---------- LOGIN ----------
+    // ---------- LOGIN (returns full User object) ----------
 
-    public String login(User loginUser) {
+    public User login(User loginUser) {
         if (loginUser.getEmail() == null || loginUser.getPassword() == null)
-            return "Missing email or password.";
+            return null;
 
         User existing = userMap.get(loginUser.getEmail().toLowerCase());
         if (existing == null)
-            return "User not found.";
+            return null;
 
         if (!existing.getPassword().equals(loginUser.getPassword()))
-            return "Invalid password.";
+            return null;
 
-        return "Login successful!";
+        return existing; // 🔥 RETURN FULL USER DATA INCLUDING ROLE
     }
 
-    // ---------- UPDATE ROLE ----------
+    // ---------- ROLE UPDATE ----------
 
     public String updateRole(String email, String role) {
         if (email == null || role == null)
@@ -115,17 +118,14 @@ public class UserService {
         user.setRole(role);
         userMap.put(email.toLowerCase(), user);
 
-        // Save to file
         saveUsers(new ArrayList<>(userMap.values()));
-        System.out.println("Role updated: " + email + " → " + role);
 
         return "Role updated successfully to " + role + "!";
     }
 
-    // ---------- EXTRA UTILITIES ----------
+    // ---------- EXTRA ----------
 
     public List<User> getAllUsersSorted() {
-        // Demonstrate DSA: sort by name using TreeSet
         TreeSet<User> sorted = new TreeSet<>(Comparator.comparing(User::getFullName));
         sorted.addAll(userMap.values());
         return new ArrayList<>(sorted);

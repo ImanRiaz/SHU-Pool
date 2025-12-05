@@ -1,134 +1,185 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Find My Partner — SHU Pool</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHU Pool - Find Your Partner</title>
     <link rel="stylesheet" href="css/find-partner.css">
 </head>
 <body>
-<header class="nav">
-    <a class="brand" href="home.html">🚗 SHU Pool</a>
-    <nav class="nav-links">
-        <a href="home.html">Home</a>
-        <a href="find-partner.html" class="active">Find Partner</a>
-        <a href="post-ride.html">Post Ride</a>
-        <a href="profile.html">Profile</a>
-    </nav>
-</header>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <button class="join-btn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15 19C15 17.6739 14.4732 16.4021 13.5355 15.4645C12.5979 14.5268 11.3261 14 10 14C8.67392 14 7.40215 14.5268 6.46447 15.4645C5.52678 16.4021 5 17.6739 5 19M13 7C13 8.65685 11.6569 10 10 10C8.34315 10 7 8.65685 7 7C7 5.34315 8.34315 4 10 4C11.6569 4 13 5.34315 13 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Join Our Carpooling Community
+        </button>
+        <h1 class="hero-title">Find Your Partner 🤝</h1>
+        <p class="hero-subtitle">Connect with drivers and passengers near you.</p>
+    </div>
+    <div class="hero-wave"></div>
+</section>
 
-<main class="page">
-    <section class="hero">
-        <h1>Find Your Partner</h1>
-        <p class="lead">Choose whether you're offering a ride or looking for one — people nearby will be highlighted.</p>
+<!-- Create Post Section -->
+<section class="create-post-section">
+    <div class="container">
+        <h2 class="section-title">Create a Post</h2>
+        <form id="postForm" class="post-form">
+            <input type="text" placeholder="Your name (auto from login)" class="form-input" id="userName" required>
 
-        <div class="choice-row">
-            <button id="chooseDriver" class="choice-card">
-                <div class="emoji">🚘</div>
-                <h3>Find a Passenger</h3>
-                <p>You're a driver offering seats — let passengers see your post.</p>
-            </button>
+            <input type="email" placeholder="enter your shu email" class="form-input" id="userEmail" required>
 
-            <button id="choosePassenger" class="choice-card">
-                <div class="emoji">🧍</div>
-                <h3>Find a Driver</h3>
-                <p>You're a passenger looking for a ride — post your request.</p>
-            </button>
-        </div>
-    </section>
-
-    <section class="post-area">
-        <div class="post-column">
-            <div class="form-card" id="formCard">
-                <h2 id="formTitle">Create a Post</h2>
-
-                <form id="postForm">
-                    <input id="posterName" type="text" placeholder="Your name (auto from login)" />
-                    <input id="posterEmail" type="email" placeholder="Your email (auto from login)" />
-
-                    <div class="inline-row">
-                        <input id="pickup" type="text" placeholder="Pickup location (area)" required />
-                        <input id="destination" type="text" placeholder="Destination (default SHU)" value="SHU Campus" required />
-                    </div>
-
-                    <div class="inline-row">
-                        <input id="time" type="time" />
-                        <input id="date" type="date" />
-                    </div>
-
-                    <div class="inline-row">
-                        <select id="postRole" required>
-                            <option value="driver">I am offering seats (Driver)</option>
-                            <option value="passenger">I need a ride (Passenger)</option>
-                        </select>
-
-                        <select id="genderPref">
-                            <option value="any">Gender preference: Any</option>
-                            <option value="male">Male only</option>
-                            <option value="female">Female only</option>
-                        </select>
-                    </div>
-
-                    <div class="inline-row">
-                        <input id="seats" type="number" min="1" placeholder="Seats (drivers only)" />
-                        <input id="contact" type="tel" placeholder="Contact number (optional)" />
-                    </div>
-
-                    <textarea id="note" rows="3" placeholder="Notes (e.g. pickup landmarks, flexible time)"></textarea>
-
-                    <div class="form-actions">
-                        <button id="submitPost" type="submit" class="btn-primary">Post to Feed</button>
-                        <button id="clearForm" type="button" class="btn-ghost">Clear</button>
-                    </div>
-
-                    <div id="formMsg" class="form-msg"></div>
-                </form>
-
+            <div class="form-row">
+                <input type="text" placeholder="Pickup location (area)" class="form-input" id="pickupLocation" required>
+                <input type="text" placeholder="Drop Location(Area)" class="form-input" id="destination" required>
             </div>
 
-            <div class="filters-card">
-                <h3>Filters</h3>
-                <div class="filter-row">
-                    <select id="filterRole">
-                        <option value="all">All Roles</option>
-                        <option value="driver">Drivers</option>
-                        <option value="passenger">Passengers</option>
-                    </select>
-
-                    <input id="filterLocation" type="text" placeholder="Filter by location (e.g., Gulshan)" />
-                </div>
-
-                <div class="filter-row">
-                    <select id="filterGender">
-                        <option value="any">Any gender</option>
-                        <option value="male">Male only</option>
-                        <option value="female">Female only</option>
-                    </select>
-
-                    <button id="applyFilters" class="btn">Apply</button>
-                    <button id="resetFilters" class="btn-ghost">Reset</button>
-                </div>
-
-                <div class="hint">Tip: Set your profile location in Profile page so we highlight posts near you.</div>
-            </div>
-        </div>
-
-        <div class="feed-column">
-            <div class="feed-header">
-                <h2>Feed</h2>
-                <div class="feed-actions">
-                    <button id="refreshFeed" class="btn">Refresh</button>
-                    <button id="newSample" class="btn-ghost">Add Sample Post</button>
-                </div>
+            <div class="form-row">
+                <input type="time" class="form-input" id="pickupTime" required>
+                <input type="date" class="form-input" id="pickupDate" required>
             </div>
 
-            <div id="feedContainer" class="feed"></div>
-        </div>
-    </section>
-</main>
+            <div class="form-row">
+                <select class="form-select" id="roleSelect" required>
+                    <option value="driver">I am offering seats (Driver)</option>
+                    <option value="passenger">I need a ride (Passenger)</option>
+                </select>
+                <select class="form-select" id="genderPref">
+                    <option value="any">Any</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
 
-<!-- toast -->
-<div id="toast" class="toast" aria-live="polite"></div>
+            <div class="form-row">
+                <input type="number" placeholder="Seats (drivers only)" class="form-input" id="seats" min="1" max="7">
+                <input type="tel" placeholder="Contact number (optional)" class="form-input" id="contactNumber">
+            </div>
+
+            <textarea placeholder="Notes (e.g. pickup landmarks, flexible time)" class="form-textarea" id="notes" rows="4"></textarea>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Post to Feed</button>
+                <button type="button" class="btn btn-secondary" id="clearBtn">Clear</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Filters Section -->
+<section class="filters-section">
+    <div class="container">
+        <h3 class="filters-title">Filters</h3>
+        <div class="filters-form">
+            <select class="form-select" id="filterRole">
+                <option value="all">All Roles</option>
+                <option value="driver">Drivers Only</option>
+                <option value="passenger">Passengers Only</option>
+            </select>
+
+            <input type="text" placeholder="Filter by location (e.g., Gulshan)" class="form-input" id="filterLocation">
+
+            <select class="form-select" id="filterGender">
+                <option value="any">Any gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <div class="filter-actions">
+                <button class="btn btn-primary" id="applyFilters">Apply</button>
+                <button class="btn btn-text" id="resetFilters">Reset</button>
+            </div>
+        </div>
+        <p class="filter-tip">Tip: Set your profile location in Profile page so we highlight posts near you.</p>
+    </div>
+</section>
+
+<!-- Recent Posts Section -->
+<section class="posts-section">
+    <div class="container">
+        <div class="posts-header">
+            <h2 class="section-title">Recent Posts 📋</h2>
+            <span class="posts-count" id="postsCount">0 posts found</span>
+        </div>
+
+        <div class="posts-list" id="postsList">
+            <!-- Posts will be dynamically inserted here -->
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="8" fill="#0066CC"/>
+                        <path d="M28 20C28 17.3478 27.4732 15.0435 26.4196 13.0869C25.3659 11.1304 23.8913 9.65217 22 8.65217C20.1087 9.65217 18.6341 11.1304 17.5804 13.0869C16.5268 15.0435 16 17.3478 16 20C16 22.6522 16.5268 24.9565 17.5804 26.913C18.6341 28.8696 20.1087 30.3478 22 31.3478C23.8913 30.3478 25.3659 28.8696 26.4196 26.913C27.4732 24.9565 28 22.6522 28 20Z" fill="white"/>
+                        <circle cx="22" cy="20" r="3" fill="#0066CC"/>
+                    </svg>
+                    <span>SHU Pool</span>
+                </div>
+                <p class="brand-tagline">Making commuting easier, greener, and more affordable for everyone.</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Find Partner</a></li>
+                        <li><a href="#">My Rides</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="contact-email">support@shupool.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <script src="js/find-partner.js"></script>
 </body>

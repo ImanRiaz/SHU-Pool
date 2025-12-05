@@ -1,68 +1,79 @@
+// Hamburger Menu Functionality
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const closeBtn = document.getElementById('closeBtn');
+const sidebarMenu = document.getElementById('sidebarMenu');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebarMenu.classList.add('active');
+    sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebarMenu.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+hamburgerBtn.addEventListener('click', openSidebar);
+closeBtn.addEventListener('click', closeSidebar);
+sidebarOverlay.addEventListener('click', closeSidebar);
+
+// Close sidebar when clicking a link
+document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', () => {
+        closeSidebar();
+    });
+});
+
+// Theme Toggle Functionality
 document.addEventListener("DOMContentLoaded", () => {
     const themeToggle = document.getElementById('themeToggle');
+    const themeToggleSidebar = document.getElementById('themeToggleSidebar');
     const body = document.body;
 
-    // Apply saved theme from localStorage
     const currentTheme = localStorage.getItem('theme') || 'light';
     if (currentTheme === 'dark') {
         body.classList.add('dark-theme');
     }
 
-    // Toggle theme on button click
-    themeToggle.addEventListener('click', () => {
+    function toggleTheme() {
         body.classList.toggle('dark-theme');
-
-        // Save preference
         const theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
         localStorage.setItem('theme', theme);
+    }
 
-        // Smooth rotation animation
+    themeToggle.addEventListener('click', () => {
+        toggleTheme();
         themeToggle.style.transition = 'transform 0.3s ease';
         themeToggle.style.transform = 'rotate(360deg)';
         setTimeout(() => {
             themeToggle.style.transform = 'rotate(0deg)';
         }, 300);
     });
+
+    themeToggleSidebar.addEventListener('click', () => {
+        toggleTheme();
+        themeToggleSidebar.style.transition = 'transform 0.3s ease';
+        themeToggleSidebar.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+            themeToggleSidebar.style.transform = 'rotate(0deg)';
+        }, 300);
+    });
 });
 
-
-// Theme Toggle Functionality
-
-
-const themeToggle = document.getElementById('themeToggle');
-const body = document.body;
-
-// Check for saved theme preference or default to light mode
-const currentTheme = localStorage.getItem('theme') || 'light';
-if (currentTheme === 'dark') {
-    body.classList.add('dark-theme');
-}
-
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-theme');
-
-    // Save theme preference
-    const theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-
-    // Add rotation animation
-    themeToggle.style.transform = 'rotate(360deg)';
-    setTimeout(() => {
-        themeToggle.style.transform = 'rotate(0deg)';
-    }, 300);
-});
-
-// Navbar scroll effect
+// Header scroll effect
 let lastScroll = 0;
-const navbar = document.querySelector('.navbar');
+const header = document.querySelector('.simple-header');
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
     if (currentScroll <= 0) {
-        navbar.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+        header.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
     } else {
-        navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+        header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
     }
 
     lastScroll = currentScroll;
@@ -100,7 +111,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe all feature cards
 document.querySelectorAll('.feature-card').forEach(card => {
     card.style.opacity = '0';
     card.style.transform = 'translateY(30px)';
@@ -119,11 +129,11 @@ document.querySelectorAll('.btn-hero').forEach(button => {
     });
 });
 
-// Add active state to navigation links
-const navLinks = document.querySelectorAll('.nav-link');
-navLinks.forEach(link => {
+// Add active state to sidebar links
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+sidebarLinks.forEach(link => {
     link.addEventListener('click', function(e) {
-        navLinks.forEach(l => l.classList.remove('active'));
+        sidebarLinks.forEach(l => l.classList.remove('active'));
         this.classList.add('active');
     });
 });
@@ -159,7 +169,6 @@ function createRipple(event) {
     button.appendChild(ripple);
 }
 
-// Add ripple effect style
 const style = document.createElement('style');
 style.textContent = `
     .btn-primary, .btn-hero {
@@ -184,7 +193,6 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Add ripple to buttons
 document.querySelectorAll('.btn-primary, .btn-hero').forEach(button => {
     button.addEventListener('click', createRipple);
 });
@@ -217,127 +225,75 @@ document.querySelectorAll('.feature-card').forEach(card => {
     });
 });
 
-// Mobile menu toggle (if needed in future)
-const createMobileMenu = () => {
-    const navRight = document.querySelector('.nav-right');
-    const menuButton = document.createElement('button');
-    menuButton.className = 'mobile-menu-toggle';
-    menuButton.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-    `;
-
-    if (window.innerWidth <= 1200) {
-        navRight.prepend(menuButton);
-    }
-};
-
-// Initialize mobile menu on load
-window.addEventListener('load', createMobileMenu);
-window.addEventListener('resize', createMobileMenu);
-
-// Easter egg: Konami code
-let konamiCode = [];
-const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-
+// Close sidebar on escape key
 document.addEventListener('keydown', (e) => {
-    konamiCode.push(e.key);
-    konamiCode = konamiCode.slice(-10);
-
-    if (konamiCode.join(',') === konamiPattern.join(',')) {
-        document.body.style.animation = 'rainbow 2s linear infinite';
-        setTimeout(() => {
-            document.body.style.animation = '';
-        }, 5000);
+    if (e.key === 'Escape') {
+        closeSidebar();
     }
 });
-
-const rainbowStyle = document.createElement('style');
-rainbowStyle.textContent = `
-    @keyframes rainbow {
-        0% { filter: hue-rotate(0deg); }
-        100% { filter: hue-rotate(360deg); }
-    }
-`;
-document.head.appendChild(rainbowStyle);
 
 console.log('%c🚗 Welcome to SHU Pool! 🚗', 'font-size: 20px; color: #0072CE; font-weight: bold;');
 console.log('%cRide Together. Save Together.', 'font-size: 14px; color: #666;');
+
 // Dynamic Welcome Message
 window.addEventListener("load", async () => {
-  const email = localStorage.getItem("userEmail");
-  const welcomeEl = document.getElementById("welcomeMessage");
+    const email = localStorage.getItem("userEmail");
+    const welcomeEl = document.getElementById("welcomeMessage");
 
-  if (!email || !welcomeEl) return;
+    if (!email || !welcomeEl) return;
 
-  try {
-    const response = await fetch(`http://localhost:8080/api/user/info?email=${encodeURIComponent(email)}`);
-    if (!response.ok) throw new Error("Failed to fetch user info");
+    try {
+        const response = await fetch(`http://localhost:8080/api/user/info?email=${encodeURIComponent(email)}`);
+        if (!response.ok) throw new Error("Failed to fetch user info");
 
-    const user = await response.json();
-    const name = user.fullName || "User";
+        const user = await response.json();
+        const name = user.fullName || "User";
 
-    // Typing effect
-    let i = 0;
-    const text = `Welcome back, ${name}!`;
-    welcomeEl.style.width = "auto";
-    welcomeEl.textContent = ""; // clear before typing
+        let i = 0;
+        const text = `Welcome back, ${name}!`;
+        welcomeEl.style.width = "auto";
+        welcomeEl.textContent = "";
 
-    const type = () => {
-      if (i < text.length) {
-        welcomeEl.textContent += text.charAt(i);
-        i++;
-        setTimeout(type, 100); // typing speed (lower = faster)
-      }
-    };
+        const type = () => {
+            if (i < text.length) {
+                welcomeEl.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, 100);
+            }
+        };
 
-    type();
-  } catch (err) {
-    console.error("Error loading user:", err);
-  }
+        type();
+    } catch (err) {
+        console.error("Error loading user:", err);
+    }
 });
 
-// ==========================
-// 🚗 SHU Pool Navigation Logic
-// ==========================
-
+// Navigation Logic
 document.addEventListener("DOMContentLoaded", () => {
-  console.log(" Navigation logic initialized.");
+    console.log("Navigation logic initialized.");
 
-  // Find buttons on home page
-  const postRideBtn = document.querySelector(".btn-accent"); // Post a Ride
-  const findPartnerBtn = document.querySelector(".btn-white"); // Find a Partner
+    const postRideBtn = document.querySelector(".btn-hero-primary");
+    const findPartnerBtn = document.querySelector(".btn-hero-secondary");
 
-  // Navbar links
-  const navLinks = {
-    home: document.querySelector('a[href="#home"]'),
-    profile: document.querySelector('a[href="#profile"]'),
-    post: document.querySelector('a[href="#post"]'),
-    partner: document.querySelector('a[href="#partner"]'),
-    schedule: document.querySelector('a[href="#schedule"]'),
-    route: document.querySelector('a[href="#route"]'),
-    about: document.querySelector('a[href="about.html"]')
-  };
+    const goTo = (page) => {
+        window.location.href = `${page}.html`;
+    };
 
-  // Helper to redirect to a page
-  const goTo = (page) => {
-    window.location.href = `${page}.html`;
-  };
+    if (postRideBtn) postRideBtn.addEventListener("click", () => goTo("post-ride"));
+    if (findPartnerBtn) findPartnerBtn.addEventListener("click", () => goTo("find-partner"));
 
-  // Main hero buttons
-  if (postRideBtn) postRideBtn.addEventListener("click", () => goTo("post-ride"));
-  if (findPartnerBtn) findPartnerBtn.addEventListener("click", () => goTo("find-partner"));
+    // ✅ Updated sidebar navigation (fix: allows about.html)
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        const href = link.getAttribute('href');
 
-  // Navbar redirects
-  if (navLinks.profile) navLinks.profile.addEventListener("click", () => goTo("profile"));
-  if (navLinks.post) navLinks.post.addEventListener("click", () => goTo("post-ride"));
-  if (navLinks.partner) navLinks.partner.addEventListener("click", () => goTo("find-partner"));
-  if (navLinks.schedule) navLinks.schedule.addEventListener("click", () => goTo("schedule"));
-  if (navLinks.route) navLinks.route.addEventListener("click", () => goTo("routes"));
- if (navLinks.about) navLinks.about.addEventListener("click", (e) => {
-     e.preventDefault(); // prevent default browser navigation if needed
-     window.location.href = "about.html";
+        // If link points to a real HTML file → allow normal navigation
+        if (href && href.endsWith('.html')) return;
+
+        // Otherwise use dynamic page name logic
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pageName = link.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+            goTo(pageName);
+        });
+    });
 });
