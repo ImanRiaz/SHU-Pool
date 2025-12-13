@@ -272,15 +272,14 @@ window.addEventListener("load", async () => {
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Navigation logic initialized.");
 
-    const postRideBtn = document.querySelector(".btn-hero-primary");
-    const findPartnerBtn = document.querySelector(".btn-hero-secondary");
+    // Single connect button
+    const connectNowBtn = document.getElementById("connectNowBtn");
 
     const goTo = (page) => {
         window.location.href = `${page}.html`;
     };
 
-    if (postRideBtn) postRideBtn.addEventListener("click", () => goTo("post-ride"));
-    if (findPartnerBtn) findPartnerBtn.addEventListener("click", () => goTo("find-partner"));
+    if (connectNowBtn) connectNowBtn.addEventListener("click", () => goTo("find-partner"));
 
     // ✅ Updated sidebar navigation (fix: allows about.html)
     document.querySelectorAll('.sidebar-link').forEach(link => {

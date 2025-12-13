@@ -1,3 +1,5 @@
+// roleselect.js
+// --------------------
 // Retrieve logged-in user email from localStorage
 const userEmail = localStorage.getItem("userEmail");
 
@@ -6,31 +8,39 @@ if (!userEmail) {
     window.location.href = "login.html";
 }
 
-document.getElementById("driverBtn").addEventListener("click", () => updateRole("driver"));
-document.getElementById("passengerBtn").addEventListener("click", () => updateRole("passenger"));
+// DOM buttons
+const driverBtn = document.getElementById("driverBtn");
+const passengerBtn = document.getElementById("passengerBtn");
 
-async function updateRole(role) {
+driverBtn && driverBtn.addEventListener("click", () => selectInitialRole("driver"));
+passengerBtn && passengerBtn.addEventListener("click", () => selectInitialRole("passenger"));
+
+// First-time role selection (no password)
+async function selectInitialRole(role) {
     try {
-        const response = await fetch("/api/auth/updateRole", {
+        const response = await fetch("/api/auth/selectInitialRole", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: userEmail, role })
         });
 
-        const result = await response.text();
-        alert(result);
+        const data = await response.json();
 
-        if (result.includes("updated")) {
+        if (response.ok && data.status === "success") {
+            // Save role locally
             localStorage.setItem("userRole", role);
 
+            // Redirect to respective form
             if (role === "driver") {
                 window.location.href = "driverForm.html";
             } else {
                 window.location.href = "passengerForm.html";
             }
+        } else {
+            alert(data.message || "Failed to select role. Try again.");
         }
-    } catch (error) {
-        console.error("Error updating role:", error);
-        alert("Could not update role. Please try again.");
+    } catch (err) {
+        console.error("Error selecting role:", err);
+        alert("Something went wrong. Try again.");
     }
 }

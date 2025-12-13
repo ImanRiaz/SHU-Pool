@@ -39,8 +39,13 @@
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
-            <button class="btn-outline">Login</button>
-            <button class="btn-primary">Sign Up</button>
+
+            <!-- Connected to login.html -->
+            <a href="login.html" class="btn-outline">Login</a>
+
+            <!-- Connected to signup.html -->
+            <a href="signup.html" class="btn-primary">Sign Up</a>
+
             <button class="hamburger-btn" id="hamburgerBtn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -102,20 +107,12 @@
             Home
         </a>
 
-        <a href="#" class="sidebar-link">
+        <a href="profile.html" class="sidebar-link">
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
             Profile
-        </a>
-
-        <a href="#" class="sidebar-link">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-            Post a Pooling Request
         </a>
 
         <a href="find-partner.html" class="sidebar-link">
@@ -125,26 +122,10 @@
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
-            Get Your Partner
+            Find Your Partner
         </a>
 
-        <a href="#" class="sidebar-link">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
-            Schedule Pool
-        </a>
-
-        <a href="#" class="sidebar-link">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            Check Route
-        </a>
+        <!-- Removed Post a Pooling Request, Schedule Pool and Check Route as requested -->
 
         <a href="about.html" class="sidebar-link">
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -153,6 +134,15 @@
                 <path d="M12 8h.01"></path>
             </svg>
             About SHU Pool
+        </a>
+
+        <!-- Added Contact Us link -->
+        <a href="contact.html" class="sidebar-link">
+            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <path d="M2 7h20M7 21v-8"></path>
+            </svg>
+            Contact Us
         </a>
     </div>
 </nav>
@@ -164,21 +154,13 @@
         <p class="hero-subtitle">The official car & bike pooling platform for Salim Habib University. Connect with classmates, share rides, and reduce your commute costs.</p>
 
         <div class="hero-buttons">
-            <button class="btn-hero btn-hero-primary">
+            <!-- Single button "Connect Now" (navigates to find-partner) -->
+            <button class="btn-hero btn-hero-primary" id="connectNowBtn">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                 </svg>
-                Post a Ride
-            </button>
-            <button class="btn-hero btn-hero-secondary">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-                Find your Partner
+                Connect Now
             </button>
         </div>
 
@@ -208,7 +190,8 @@
     <div class="container">
         <div class="features-grid">
 
-            <div class="feature-card">
+            <!-- Your Profile (now clickable) -->
+            <a href="profile.html" class="feature-card" style="text-decoration: none; color: inherit;">
                 <div class="feature-card-icon" style="background: rgba(33, 150, 243, 0.1); color: #2196F3;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -217,19 +200,9 @@
                 </div>
                 <h3 class="feature-card-title">Your Profile</h3>
                 <p class="feature-card-desc">Manage your personal information, preferences, and ride history all in one place.</p>
-            </div>
+            </a>
 
-            <div class="feature-card">
-                <div class="feature-card-icon" style="background: rgba(76, 175, 80, 0.1); color: #4CAF50;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                </div>
-                <h3 class="feature-card-title">Post a Pooling Request</h3>
-                <p class="feature-card-desc">Offering a ride? Create a pooling request and help others commute while sharing costs.</p>
-            </div>
-
+            <!-- Find Your Partner -->
             <a href="find-partner.html" class="feature-card" style="text-decoration: none; color: inherit;">
                 <div class="feature-card-icon" style="background: rgba(156, 39, 176, 0.1); color: #9C27B0;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -243,30 +216,7 @@
                 <p class="feature-card-desc">Find classmates and colleagues traveling the same route and time as you.</p>
             </a>
 
-            <div class="feature-card">
-                <div class="feature-card-icon" style="background: rgba(255, 152, 0, 0.1); color: #FF9800;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                </div>
-                <h3 class="feature-card-title">Schedule Pool</h3>
-                <p class="feature-card-desc">Plan your rides ahead of time. Set up recurring pools for your regular commute.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-card-icon" style="background: rgba(244, 67, 54, 0.1); color: #F44336;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                </div>
-                <h3 class="feature-card-title">Check Route</h3>
-                <p class="feature-card-desc">View detailed route maps, estimated times, and optimal pickup points for your journey.</p>
-            </div>
-
+            <!-- About SHU Pool -->
             <a href="about.html" class="feature-card" style="text-decoration: none; color: inherit;">
                 <div class="feature-card-icon" style="background: rgba(0, 188, 212, 0.1); color: #00BCD4;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -283,7 +233,7 @@
     </div>
 </section>
 
-<!-- Footer -->
+<!-- Footer (unchanged) -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-section">

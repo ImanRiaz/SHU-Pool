@@ -26,6 +26,13 @@ public class DriverService {
         loadToMemory();
     }
 
+    // inside DriverService
+    public Driver getByEmail(String email) {
+        if (email == null) return null;
+        return driverMap.get(email.toLowerCase());
+    }
+
+
     // Load existing drivers into memory
     private void loadToMemory() {
         for (Driver d : readDrivers()) {

@@ -22,9 +22,6 @@ public class AuthController {
     // ---------- SIGNUP ----------
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody User newUser) {
-        System.out.println("=== SIGNUP ENDPOINT HIT ===");
-        System.out.println("Received user: " + newUser.getEmail());
-
         String result = userService.signup(newUser);
 
         if (!result.equals("Signup successful!")) {
@@ -41,9 +38,6 @@ public class AuthController {
     // ---------- LOGIN ----------
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginUser) {
-        System.out.println("=== LOGIN ENDPOINT HIT ===");
-        System.out.println("Login attempt from: " + loginUser.getEmail());
-
         User logged = userService.login(loginUser);
 
         if (logged == null) {
@@ -52,25 +46,39 @@ public class AuthController {
             );
         }
 
-        // SUCCESS response with full user details
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
         response.put("email", logged.getEmail());
         response.put("fullName", logged.getFullName());
         response.put("studentId", logged.getStudentId());
-        response.put("role", logged.getRole()); // 🔥 important
+        response.put("role", logged.getRole());
 
         return ResponseEntity.ok(response);
     }
 
-    // ---------- UPDATE ROLE ----------
+    // ---------- PROFILE ROLE UPDATE (password required) ----------
     @PostMapping("/updateRole")
     public ResponseEntity<?> updateRole(@RequestBody Map<String, String> body) {
         String email = body.get("email");
         String role = body.get("role");
+        String password = body.get("password");
 
-        System.out.println("=== ROLE UPDATE REQUEST ===");
-        System.out.println("Email: " + email + ", New Role: " + role);
+        String result = userService.updateRoleWithPassword(email, password, role);
+
+        if (!result.equals("success")) {
+            return ResponseEntity.status(401).body(
+                    Map.of("status", "error", "message", result)
+            );
+        }
+
+        return ResponseEntity.ok(Map.of("status", "success"));
+    }
+
+    // ---------- INITIAL ROLE SELECTION (after signup/login, no password) ----------
+    @PostMapping("/selectInitialRole")
+    public ResponseEntity<?> selectInitialRole(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String role = body.get("role");
 
         String result = userService.updateRole(email, role);
 
@@ -80,8 +88,18 @@ public class AuthController {
             );
         }
 
-        return ResponseEntity.ok(
-                Map.of("status", "success", "message", result)
-        );
+        return ResponseEntity.ok(Map.of("status", "success", "message", result));
+    }
+
+    // ---------- UPDATE PROFILE ----------
+    @PostMapping("/updateProfile")
+    public ResponseEntity<?> updateProfile(@RequestBody User updatedUser) {
+        String result = userService.updateProfile(updatedUser);
+
+        if (!result.equals("Profile updated")) {
+            return ResponseEntity.badRequest().body(result);
+        }
+
+        return ResponseEntity.ok(result);
     }
 }

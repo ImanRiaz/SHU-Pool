@@ -26,6 +26,13 @@ public class PassengerService {
         loadToMemory();
     }
 
+    // inside PassengerService
+    public Passenger getByEmail(String email) {
+        if (email == null) return null;
+        return passengerMap.get(email.toLowerCase());
+    }
+
+
     // Load data to memory for O(1) lookups
     private void loadToMemory() {
         for (Passenger p : readPassengers()) {

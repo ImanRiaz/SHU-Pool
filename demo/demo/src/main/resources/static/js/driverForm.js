@@ -28,7 +28,7 @@ document.getElementById("driverForm").addEventListener("submit", async (e) => {
     });
 
     const result = await response.text();
-    console.log("✅ Server response:", result);
+    console.log("Server response:", result);
 
     // Check for success or already exists
     if (result.toLowerCase().includes("successful") || result.toLowerCase().includes("exists")) {
